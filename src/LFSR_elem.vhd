@@ -28,9 +28,9 @@ architecture struct of LFSR_elem is
 		  x_1	: in std_logic;		
 		  z		: out std_logic		
 		);
-	component MUX;	
+	end component MUX;	
 	
-	component DFF
+	component DFF is
 		port (
 			clk		: in std_logic;
 			rst_n	: in std_logic;

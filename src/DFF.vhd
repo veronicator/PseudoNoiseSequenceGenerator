@@ -12,7 +12,7 @@ entity DFF is
 	);
 end DFF;
 
-architecture rtl of DFF is
+architecture beh of DFF is
 
 begin
   dff_p: process(rst_n, clk)	-- sensitivity list: (resetn, clk)
@@ -24,4 +24,4 @@ begin
 	end if;
   end process dff_p;
   
-end rtl;
+end beh;

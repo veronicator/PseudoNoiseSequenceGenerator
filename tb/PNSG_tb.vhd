@@ -8,7 +8,7 @@ end PNGS_tb;
 
 architecture beh of PNGS_tb is
 
-	-- file for output sequence
+	-- file for output sequence -> for checking correctness
 	file PN_CODE_OUT_FILE: text is out "PN_code_out_file2.txt";
 
 	-- constants
@@ -74,15 +74,12 @@ begin
 	
 	begin
 		
-		--file_open(PN_CODE_OUT_FILE, "PN_code_out_file2.txt", write_mode);
-		
 		if (rst_n_tb = '0') then
 			clk_counter := 0;		-- reset the clock counter
 			seed_tb <= "101010101010101";
 			load_tb <= '1';		-- to set the initial value of the seed
 		elsif (rising_edge(clk_tb)) then
 			load_tb <= '0';
-			--clk_counter := clk_counter + 1;
 			t <= clk_counter;
 			
 			if (PN_code_tb = seed_tb and clk_counter > 1) then
@@ -91,7 +88,6 @@ begin
 			elsif (clk_counter >= 1) then
 				WRITE(out_bit_code, PN_code_tb, right, N_STAGE);
 				WRITELINE(PN_CODE_OUT_FILE, out_bit_code);
-			--else null
 			
 			end if;
 			

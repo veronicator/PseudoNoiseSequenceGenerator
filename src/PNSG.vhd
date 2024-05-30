@@ -11,7 +11,6 @@ entity PNSG is
 		N_stage : positive := 15
 		);
 	
-
 	port (
 		clk	 		: in std_logic;		-- clock signal
 		rst_n		: in std_logic;		-- reset signal, active low
@@ -69,15 +68,13 @@ begin
 	end generate GEN;
 	
 	-- combinational logic
-	-- the feedback bit is generated through the xor operationsof the taps
+	-- the feedback bit is generated through the xor operations of the taps
 	feedback_bit <= ((((( q_out(15) xor q_out(13) ) 
 										xor q_out(9) ) 
 											xor q_out(8) ) 
 												xor q_out(7) ) 
 													xor q_out(5) );
-	
 	PN_code <= q_out;
-	
 	
 end beh;
 

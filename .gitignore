@@ -1,5 +1,6 @@
 modelsim
 vivado
+img
 *.exe
 *.o
 *.out

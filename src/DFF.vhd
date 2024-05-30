@@ -19,7 +19,7 @@ begin
   begin
     if rst_n='0' then
 	  q <= '0';
-	elsif (clk'event and clk='1') then
+	elsif (rising_edge(clk)) then
 	  q <= d;
 	end if;
   end process dff_p;

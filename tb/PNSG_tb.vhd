@@ -15,7 +15,7 @@ architecture beh of PNGS_tb is
 	constant T_CLK:	time := 10 ns;		-- clock period
 	constant T_RST: time := 5 ns;		-- period before the reset deassertion 
 	constant N_STAGE: positive := 15;	-- number of PNSG stages
-	constant MAX_PERIOD: positive := 32767;	-- ma period before the pn_code repeats: 2^15 - 1
+	constant MAX_PERIOD: positive := 32767;	-- max period before the pn_code repeats: 2^15 - 1
 	
 	-- signals
 	signal clk_tb: std_logic := '0';	-- clock signal, initialized to '0'
@@ -24,7 +24,7 @@ architecture beh of PNGS_tb is
 	signal seed_tb: std_logic_vector(1 to N_STAGE) := "101010101010101";	-- initial seed for testing
 	signal PN_code_tb: std_logic_vector(1 to N_STAGE);	-- output signal vector
 	signal testing: boolean := true;
-	signal t: integer := 0;
+	signal t: integer := 0;		-- used only to a visual check of the wave value in modelsim
 	
 	
 	-- dut
@@ -79,13 +79,16 @@ begin
 			seed_tb <= "101010101010101";
 			load_tb <= '1';		-- to set the initial value of the seed
 		elsif (rising_edge(clk_tb)) then
-			load_tb <= '0';
+			load_tb <= '0';		-- stop initialization phase
 			t <= clk_counter;
 			
 			if (PN_code_tb = seed_tb and clk_counter > 1) then
-			-- if (clk_counter >= MAX_PERIOD) then
+				-- when the PN_code in output is equal to the initial seed 
+				-- it means a new period starts (periodicity of the sequence)
 				testing <= false;
 			elsif (clk_counter >= 1) then
+				-- write the pn_code sequence of each step into an output file
+				-- also the initial seed is included in the file
 				WRITE(out_bit_code, PN_code_tb, right, N_STAGE);
 				WRITELINE(PN_CODE_OUT_FILE, out_bit_code);
 			
